@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="estilos/sugestões.css">
+    <link rel="stylesheet" href="estilos/modelos.css">
+    <link rel="stylesheet" href="estilos/notificações.css">
+    <link rel="stylesheet" href="estilos/conta.css">
+    <link rel="stylesheet" href="estilos/planos.css">
+    <link rel="stylesheet" href="estilos/resposta.css">
+    <link rel="stylesheet" href="estilos/menu.css">
+    <link rel="stylesheet" href="estilos/protecf.css">
+    <link rel="stylesheet" href="estilos/opções.css">
+    <link rel="stylesheet" href="estilos/código.css">
+    <link rel="stylesheet" href="estilos/mais.css">
+</head>
+<body>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+
+    <div class="app-container">
+        <aside class="sidebar">
+    <div class="sidebar-search">
+        <i class="ri-search-line"></i>
+        <input type="text" id="historySearch" placeholder="Pesquisar chat...">
+    </div>
+
+    <button class="new-chat"><i class="ri-add-line"></i> Novo Chat</button>
+    
+    <div class="history">
+        <p class="history-title">Recentes</p>
+        <div class="history-item"><i class="ri-chat-3-line"></i> Como usar a API Groq</div>
+    </div>
+</aside>
+
+
+
+
+        <main class="chat-area">
+            <header class="chat-header">
+    <div class="header-left">
+        <i class="ri-side-bar-line menu-mobile"></i>
+        <div class="model-selector" id="modelSelector">
+    <span id="currentModel">AI Vt3</span>
+    <i class="ri-arrow-down-s-line"></i>
+
+    <div class="model-dropdown" id="modelDropdown">
+        <div class="model-option active" data-model="AI Vt3">
+            <div class="model-info">
+                <i class="ri-flashlight-line"></i>
+                <div>
+                    <strong>AI Vt3</strong>
+                    <p>Equilíbrio entre velocidade e inteligência</p>
+                </div>
+            </div>
+            <i class="ri-checkbox-circle-fill check-icon"></i>
+        </div>
+
+        <div class="model-option" data-model="AI Fc2">
+            <div class="model-info">
+                <i class="ri-brain-line"></i>
+                <div>
+                    <strong>AI Fc2</strong>
+                    <p>Otimizado para respostas rápidas</p>
+                </div>
+            </div>
+            <i class="ri-checkbox-circle-fill check-icon"></i>
+        </div>
+
+        <div class="model-option" data-model="Pro Unt">
+            <div class="model-info">
+                <i class="ri-vip-diamond-line" style="color: #d96570;"></i>
+                <div>
+                    <strong>Pro Unt</strong>
+                    <p>Modelo avançado para tarefas complexas</p>
+                </div>
+            </div>
+            <i class="ri-checkbox-circle-fill check-icon"></i>
+        </div>
+    </div>
+</div>
+
+    </div>
+    <div class="header-right">
+        <button class="icon-btn"><i class="ri-user-line"></i></button>
+        <button class="icon-btn notification-btn">
+    <i class="ri-notification-3-line"></i>
+    <span class="notification-badge"></span>
+</button>
+        <div class="user-avatar">G</div>
+    </div>
+</header>
+
+
+            <div class="chat-window" id="chatWindow">
+    <div class="welcome-container" id="welcomeContainer">
+        <div class="welcome-header">
+            <div class="ai-icon"><i class="ri-shining-2-line"></i></div>
+            <h2>Como posso ajudar você hoje?</h2>
+        </div>
+        
+        <div class="suggestions-grid">
+            <div class="suggestion-card" onclick="fillInput('Me dê ideias de nomes para um app de táxi')">
+                <i class="ri-lightbulb-line"></i>
+                <p>Ideias de nomes para um app de táxi</p>
+            </div>
+            <div class="suggestion-card" onclick="fillInput('Explique como funciona uma API REST')">
+                <i class="ri-code-s-slash-line"></i>
+                <p>Explique como funciona uma API REST</p>
+            </div>
+            <div class="suggestion-card" onclick="fillInput('Crie um roteiro de viagem para Moçambique')">
+                <i class="ri-map-2-line"></i>
+                <p>Roteiro de viagem para Moçambique</p>
+            </div>
+            <div class="suggestion-card" onclick="fillInput('Ajude-me a escrever um e-mail formal')">
+                <i class="ri-mail-send-line"></i>
+                <p>Escrever um e-mail profissional</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            <footer class="input-area">
+                
+                <div class="limit-alert upgrade-pro-alert" id="upgradeProAlert">
+        <div class="limit-info">
+            <i class="ri-vip-crown-fill" style="color: #d96570;"></i>
+            <div class="limit-text">
+                <h4>Modelo Pro Restrito</h4>
+                <p>Tens que actualizar o seu plano actual para pro para usar este modelo.</p>
+            </div>
+        </div>
+        <div class="limit-actions">
+            <button class="btn-upgrade-pro">
+                <i class="ri-arrow-up-circle-line"></i> Actualizar Plano
+            </button>
+        </div>
+    </div>
+    
+    
+                
+    <div class="limit-alert" id="limitAlert">
+        <div class="limit-info">
+            <i class="ri-error-warning-fill"></i>
+            <div class="limit-text">
+                <h4>Limite de mensagens atingido</h4>
+                <p>Restaura em: <span id="timer-display">05:00</span></p>
+            </div>
+        </div>
+        <div class="limit-actions">
+            <button class="btn-upgrade">Atualizar Plano</button>
+        </div>
+    </div>
+
+    <div class="input-container">
+    <div class="attachment-wrapper">
+        <button id="attachBtn" type="button"><i class="ri-add-line"></i></button>
+        
+        <div class="attachment-menu" id="attachmentMenu">
+            <div class="attach-item">
+                <i class="ri-camera-line" style="color: #4f46e5;"></i>
+                <span>Câmara</span>
+            </div>
+            <div class="attach-item">
+                <i class="ri-image-line" style="color: #10b981;"></i>
+                <span>Galeria</span>
+            </div>
+            <div class="attach-item">
+                <i class="ri-file-text-line" style="color: #f59e0b;"></i>
+                <span>Ficheiros</span>
+            </div>
+            <div class="attach-item">
+                <i class="ri-flask-line" style="color: #8b5cf6;"></i>
+                <span>Betas</span>
+            </div>
+        </div>
+    </div>
+    
+    <textarea id="userInput" placeholder="Digite uma mensagem..." rows="1"></textarea>
+    <button id="sendBtn" type="button"><i class="fi fi-rr-paper-plane-top"></i></button>
+</div>
+
+    <p class="disclaimer">A IA pode fornecer informações incorretas.</p>
+</footer>
+
+        </main>
+    </div>
+    
+    <div class="notifications-modal" id="notificationsModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Notificações</h3>
+            <button id="closeNotifications"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="updates-list">
+                <div class="update-item">
+                    <div class="update-icon" style="background: #eef2ff; color: #4f46e5;">
+                        <i class="ri-magic-line"></i>
+                    </div>
+                    <div class="update-info">
+                        <strong>Efeito de Digitação</strong>
+                        <p>Agora as sugestões são digitadas automaticamente no campo.</p>
+                        <span>Hoje</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon" style="background: #fff7ed; color: #f97316;">
+                        <i class="ri-shield-check-line"></i>
+                    </div>
+                    <div class="update-info">
+                        <strong>Sistema de Limites</strong>
+                        <p>Integração com Firebase para controle de mensagens concluída.</p>
+                        <span>Ontem</span>
+                    </div>
+                </div>
+                <div class="update-item">
+                    <div class="update-icon" style="background: #f0fdf4; color: #22c55e;">
+                        <i class="ri-layout-grid-line"></i>
+                    </div>
+                    <div class="update-info">
+                        <strong>Interface Wanga</strong>
+                        <p>Novo design inspirado no DeepSeek e Gemini aplicado.</p>
+                        <span>2 dias atrás</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--- PÁGINA DE PERFIL --->
+<div class="profile-modal" id="profileModal">
+    <div class="modal-content profile-card">
+        <div class="modal-header">
+            <h3>Minha Conta</h3>
+            <button id="closeProfile"><i class="ri-close-line closek"></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="user-info-section">
+                <div class="large-avatar" id="profileAvatar">G</div>
+                <h4 id="profileName">Carregando...</h4>
+                <p id="profileEmail">email@exemplo.com</p>
+            </div>
+
+            <div class="account-stats">
+                <p class="stats-title">Uso de Mensagens</p>
+                <div class="stat-item">
+                    <div class="stat-label"><i class="ri-flashlight-line"></i> AI Vt3</div>
+                    <div class="stat-value"><span id="usage-vt3">0</span> / 5</div>
+                </div>
+                <div class="stat-progress"><div class="progress-bar" id="bar-vt3" style="width: 0%"></div></div>
+
+                <div class="stat-item" style="margin-top: 12px;">
+                    <div class="stat-label"><i class="ri-brain-line"></i> AI Fc2</div>
+                    <div class="stat-value"><span id="usage-fc2">0</span> / 10</div>
+                </div>
+                <div class="stat-progress"><div class="progress-bar" id="bar-fc2" style="width: 0%; background: #22c55e;"></div></div>
+            </div>
+            
+            <div class="account-menu">
+    <div class="menu-item" id="darkModeToggle">
+        <i class="ri-moon-line" id="darkModeIcon"></i>
+        <span id="darkModeText">Modo Escuro</span>
+    </div>
+    
+    <div class="menu-item">
+        <i class="ri-shield-user-line"></i>
+        <span>Privacidade e Segurança</span>
+    </div>
+    
+    <button class="menu-item logout-btn" onclick="logoutUser()">
+                    <i class="ri-logout-box-r-line"></i>
+                    <span>Sair da conta</span>
+                </button>
+    
+    </div>
+
+        </div>
+    </div>
+</div>
+
+<!--- SHOW TOASTE --->
+<div id="toast-container" style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 10px; align-items: center; pointer-events: none;"></div>
+
+<!--- Feedback -->
+<div class="profile-modal" id="feedbackModal">
+    <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-header">
+            <h3>Sugerir Melhoria</h3>
+            <button id="closeFeedback"><i class="ri-close-line"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+                Sua opinião ajuda a wanga a evoluir. O que podemos melhorar?
+            </p>
+            
+            <div class="account-menu" style="gap: 15px;">
+                <div class="input-group">
+                    <label style="font-size: 0.8rem; font-weight: 500; margin-bottom: 5px; display: block;">Tipo de Feedback</label>
+                    <select id="feedbackType" style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-input-container); color: var(--text-main); outline: none;">
+                        <option value="Erro na resposta">Erro na resposta</option>
+                        <option value="Sugestão de funcionalidade">Sugestão de funcionalidade</option>
+                        <option value="Interface/Design">Interface/Design</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label style="font-size: 0.8rem; font-weight: 500; margin-bottom: 5px; display: block;">Sua mensagem</label>
+                    <textarea id="feedbackText" placeholder="Conte-nos detalhes..." style="width: 100%; min-height: 100px; padding: 10px; border-radius: 10px; border: 1px solid var(--border-color); background: var(--bg-input-container); color: var(--text-main); outline: none; resize: vertical;"></textarea>
+                </div>
+
+                <button class="new-chat" id="submitFeedback" style="width: 100%; justify-content: center; background: var(--primary-color); color: white;">
+                    Enviar Feedback
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--- LISTA DE OPÇÕES --->
+<div id="messageContextMenu" class="context-menu">
+    <div class="menu-item-action" data-action="copy">
+        <i class="ri-file-copy-line"></i> <span>Copiar</span>
+    </div>
+    <div class="menu-item-action" data-action="reply">
+        <i class="ri-reply-line"></i> <span>Responder</span>
+    </div>
+    <div class="menu-item-action" data-action="delete">
+        <i class="ri-delete-bin-line"></i> <span>Apagar</span>
+    </div>
+    <div class="menu-divider"></div>
+    <div class="menu-item-action" data-action="info">
+        <i class="ri-information-line"></i> <span>Info</span>
+    </div>
+</div>
+
+
+
+    <script type="module" src="auth/auth.js"></script>
+    <script src="scripts/comandosIA.js"></script>
+
+    <script type="module" src="script.js"></script>
+    
+    <script src="scripts/modelos.js"></script>
+    <script src="scripts/notificações.js"></script>
+    <script src="scripts/theme.js"></script>
+    <script src="scripts/protect.js"></script>
+    <script src="scripts/opções.js"></script>
+    <script src="scripts/mais.js"></script>
+</body>
+</html>

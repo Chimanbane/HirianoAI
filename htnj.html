@@ -1,0 +1,21 @@
+<footer class="input-area">
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+
+    <div class="input-container">
+        <div class="attachment-wrapper">
+            <button id="attachBtn" type="button"><i class="ri-add-line"></i></button>
+            </div>
+        
+        <div class="input-content-wrapper" style="flex: 1; display: flex; flex-direction: column;">
+            <div id="imagePreviewContainer" style="display: none; padding: 10px; position: relative; width: fit-content;">
+                <img id="imagePreview" src="" style="max-height: 100px; border-radius: 12px; border: 2px solid var(--primary-color);">
+                <button id="removeImage" type="button" style="position: absolute; top: 0; right: 0; background: #ef4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; cursor: pointer;">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <textarea id="userInput" placeholder="Digite uma mensagem..." rows="1"></textarea>
+        </div>
+        
+        <button id="sendBtn" type="button"><i class="ri-send-plane-2-fill"></i></button>
+    </div>
+</footer>
